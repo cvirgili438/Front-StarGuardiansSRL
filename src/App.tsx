@@ -11,7 +11,7 @@ import { useLocalStorage } from "./hooks/useApp";
 export type Auth = {
   user: string;
   token: string;
-  authorized:Boolean
+  authorized: Boolean;
 };
 
 function App() {
@@ -23,11 +23,8 @@ function App() {
         <AppContextProvider>
           <NavBar />
           <Switch>
-            <Route exact path={'/'}>
-              {Object.keys(user).length <= 1 ?
-                <LoginForm/>
-                : <Home />
-               }              
+            <Route exact path={"/"}>
+              {Object.keys(user).length <= 1 ? <LoginForm /> : <Home />}
             </Route>
           </Switch>
         </AppContextProvider>

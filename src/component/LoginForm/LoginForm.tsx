@@ -1,6 +1,8 @@
 import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { Auth } from "../../App";
 import { AppContext } from "../../context/AppContext";
+import { useLocalStorage } from "../../hooks/useApp";
 import style from "./LoginForm.module.css";
 
 export interface UserInput {
@@ -9,23 +11,28 @@ export interface UserInput {
 }
 
 export default function LoginForm() {
-  const {auth}= useContext(AppContext)
+  const { auth } = useContext(AppContext);
   const history = useHistory();
   const [remember, setRemember] = useState(false);
   const [input, setInput] = useState({} as UserInput);
+  const [user,setUser]=useLocalStorage<Auth|undefined>('User',Object)
   function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     setInput({
       ...input,
       [e.target.name]: e.target.value,
-    });    
+    });
   }
-   async function handleSubmit(e: any){
-    e.preventDefault()
-     const response = await auth(input) 
-     
-    console.log(response)
+  async function handleSubmit(e: any) {
+    e.preventDefault();
 
+    const response = await auth(input);
+    if(remember){
+     setUser(response)
+      console.log(localStorage.getItem('User'),localStorage)
+    }
+
+   
   }
 
   return (
@@ -33,8 +40,13 @@ export default function LoginForm() {
       <div>
         Inicia Sesion
         <form className={style.container}>
-          <input onChange={handleInput} name='user' placeholder="Usuario" />
-          <input onChange={handleInput} type='password' name='password' placeholder="Contraseña" />
+          <input onChange={handleInput} name="user" placeholder="Usuario" />
+          <input
+            onChange={handleInput}
+            type="password"
+            name="password"
+            placeholder="Contraseña"
+          />
           <label>
             <input
               type="checkbox"

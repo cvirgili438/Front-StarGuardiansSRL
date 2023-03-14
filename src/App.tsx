@@ -1,24 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+
+import "./App.css";
+import Home from "./component/Home/Home";
+import { AppContextProvider } from "./context/AppContext";
+import { useLocalStorage } from "./hooks/useApp";
+
+type Auth = {
+  user:string,
+  token:string
+}
 
 function App() {
+  const [user,setUser] = useLocalStorage<Auth>('User',Object)
+ 
+  console.log(user)
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <AppContextProvider>
+          <Switch>
+            <Route>
+              {/* {user.user === null && user.token === null ?
+
+               } */}
+              <Home />
+            </Route>
+          </Switch>
+        </AppContextProvider>
+      </BrowserRouter>
     </div>
   );
 }

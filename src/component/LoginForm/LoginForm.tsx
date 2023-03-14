@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { AppContext } from "../../context/AppContext";
 import style from "./LoginForm.module.css";
 
-interface UserInput {
+export interface UserInput {
   user: string;
   password: string;
 }
 
 export default function LoginForm() {
+  const {auth}= useContext(AppContext)
   const history = useHistory();
   const [remember, setRemember] = useState(false);
   const [input, setInput] = useState({} as UserInput);
@@ -17,6 +19,13 @@ export default function LoginForm() {
       ...input,
       [e.target.name]: e.target.value,
     });    
+  }
+   async function handleSubmit(e: any){
+    e.preventDefault()
+     const response = await auth(input) 
+     
+    console.log(response)
+
   }
 
   return (
@@ -37,7 +46,7 @@ export default function LoginForm() {
             />
             Remember
           </label>
-          <button type="submit"> Login</button>
+          <button onClick={handleSubmit}> Login</button>
         </form>
         <h3>No tiene cuenta creada ?</h3>
         <button onClick={() => history.push("/register")}>Register </button>

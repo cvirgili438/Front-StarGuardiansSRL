@@ -8,9 +8,10 @@ import NavBar from "./component/NavBar/NavBar";
 import { AppContextProvider } from "./context/AppContext";
 import { useLocalStorage } from "./hooks/useApp";
 
-type Auth = {
+export type Auth = {
   user: string;
   token: string;
+  authorized:Boolean
 };
 
 function App() {

@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Auth } from "../../App";
 import { AppContext } from "../../context/AppContext";
-import { useLocalStorage } from "../../hooks/useApp";
+import { useLocalStorage, useSessionStorage } from "../../hooks/useApp";
 import style from "./LoginForm.module.css";
 
 export interface UserInput {
@@ -16,6 +16,7 @@ export default function LoginForm() {
   const [remember, setRemember] = useState(false);
   const [input, setInput] = useState({} as UserInput);
   const [user,setUser]=useLocalStorage<Auth|undefined>('User',Object)
+  const [userForgot,setUserForgot]=useSessionStorage<Auth | undefined>('User',Object)
   function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     setInput({
@@ -28,8 +29,10 @@ export default function LoginForm() {
 
     const response = await auth(input);
     if(remember){
-     setUser(response)
-      console.log(localStorage.getItem('User'),localStorage)
+     setUser(response)     
+    }
+    if(!remember){
+      setUserForgot(response)
     }
 
    

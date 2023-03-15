@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+
 
 import "./App.css";
 import Home from "./component/Home/Home";
@@ -16,6 +17,7 @@ export type Auth = {
 
 function App() {
   const [user, setUser] = useLocalStorage<Auth>("User", Object);
+  
 
   return (
     <div className="App">
@@ -24,8 +26,9 @@ function App() {
           <NavBar />
           <Switch>
             <Route exact path={"/"}>
-              {Object.keys(user).length <= 1 ? <LoginForm /> : <Home />}
+              <Home/>              
             </Route>
+            <Route path={'/login'} component={LoginForm} />
           </Switch>
         </AppContextProvider>
       </BrowserRouter>

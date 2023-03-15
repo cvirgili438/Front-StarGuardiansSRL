@@ -34,8 +34,7 @@ export default function LoginForm() {
     if(!remember){
       setUserForgot(response)
     }
-
-   
+    console.log(user)
   }
 
   return (

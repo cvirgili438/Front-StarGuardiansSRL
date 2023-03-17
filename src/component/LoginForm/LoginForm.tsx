@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Auth } from "../../App";
 import { AppContext } from "../../context/AppContext";
@@ -36,6 +36,11 @@ export default function LoginForm() {
     }
     console.log(user)
   }
+  useEffect(()=>{
+    if(user?.authorized === true){
+      history.push('/')
+    }
+  },[user])
 
   return (
     <div className={style.container}>

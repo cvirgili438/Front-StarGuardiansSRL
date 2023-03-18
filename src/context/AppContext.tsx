@@ -6,7 +6,8 @@ import { Auth } from "../App";
 type AppContexts = {
   auth: (obj: UserInput) => Promise<Auth | undefined>;
   session: string;
-  setSession:React.Dispatch<React.SetStateAction<string>>
+  setSession:React.Dispatch<React.SetStateAction<string>>;
+  getUserSchedule : (id:string)=>Promise<string>
 };
 type AppContextProviderProps = {
   children: ReactNode;
@@ -46,10 +47,15 @@ export function AppContextProvider({ children }: AppContextProviderProps) {
       } else throw error;
     }
   }
+
+  async function getUserSchedule(id:string):Promise<string>{
+    return 'some'
+  }
   const value = {
     auth,
     session,
     setSession,
+    getUserSchedule
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

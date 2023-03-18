@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 
 import "./App.css";
+import Calendar from "./component/Calendar/Calendar";
 import Home from "./component/Home/Home";
 import LoginForm from "./component/LoginForm/LoginForm";
 import NavBar from "./component/NavBar/NavBar";
+import Signing from "./component/Signing/Signing";
 import { AppContextProvider } from "./context/AppContext";
-import { useLocalStorage } from "./hooks/useApp";
+
 
 export type Auth = {
   user: string;
@@ -16,9 +18,6 @@ export type Auth = {
 };
 
 function App() {
-  const [user, setUser] = useLocalStorage<Auth>("User", Object);
-  
-
   return (
     <div className="App">
       <BrowserRouter>
@@ -29,7 +28,9 @@ function App() {
               <Home/>              
             </Route>
             <Route path={'/login'} component={LoginForm} />
-          </Switch>
+            <Route path={'/signing'} component={Signing} />
+            <Route path={'/calendar'} component={Calendar} />
+           </Switch>
         </AppContextProvider>
       </BrowserRouter>
     </div>

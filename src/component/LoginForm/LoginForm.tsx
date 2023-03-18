@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Auth } from "../../App";
 import { AppContext } from "../../context/AppContext";
-import { useLocalStorage, useSessionStorage } from "../../hooks/useApp";
+import { useLocalStorage } from "../../hooks/useApp";
 import style from "./LoginForm.module.css";
 
 export interface UserInput {
@@ -12,11 +12,9 @@ export interface UserInput {
 
 export default function LoginForm() {
   const { auth } = useContext(AppContext);
-  const history = useHistory();
-  const [remember, setRemember] = useState(false);
+  const history = useHistory();  
   const [input, setInput] = useState({} as UserInput);
   const [user,setUser]=useLocalStorage<Auth|undefined>('User',Object)
-  const [userForgot,setUserForgot]=useSessionStorage<Auth | undefined>('User',Object)
   function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     setInput({
@@ -28,19 +26,13 @@ export default function LoginForm() {
     e.preventDefault();
 
     const response = await auth(input);
-    if(remember){
-     setUser(response)     
-    }
-    if(!remember){
-      setUserForgot(response)
-    }
-    console.log(user)
+    setUser(response)
   }
   useEffect(()=>{
     if(user?.authorized === true){
       history.push('/')
     }
-  },[user])
+  },[user,history])
 
   return (
     <div className={style.container}>
@@ -53,18 +45,7 @@ export default function LoginForm() {
             type="password"
             name="password"
             placeholder="Contraseña"
-          />
-          <label>
-            <input
-              type="checkbox"
-              name="remember"
-              onClick={() => {
-                setRemember(!remember);
-                console.log(remember);
-              }}
-            />
-            Remember
-          </label>
+          />        
           <button onClick={handleSubmit}> Login</button>
         </form>
         <h3>No tiene cuenta creada ?</h3>

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import {  useHistory } from "react-router-dom";
 import { Auth } from "../../App";
 import { useLocalStorage } from "../../hooks/useApp";
 
@@ -10,7 +10,7 @@ export default function Home() {
     if(user?.authorized === false || Object.keys(user).length < 1 ){
       history.push('/login')
     }
-  },[user])
+  },[user,history])
   
   return (
     <div>

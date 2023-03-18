@@ -1,10 +1,12 @@
-import { createContext, ReactNode, useContext } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 import axios, { AxiosError } from "axios";
 import { UserInput } from "../component/LoginForm/LoginForm";
 import { Auth } from "../App";
 
 type AppContexts = {
   auth: (obj: UserInput) => Promise<Auth | undefined>;
+  session: string;
+  setSession:React.Dispatch<React.SetStateAction<string>>
 };
 type AppContextProviderProps = {
   children: ReactNode;
@@ -14,6 +16,7 @@ export const AppContext = createContext({} as AppContexts);
 const URL = process.env.REACT_APP_URL;
 
 export function AppContextProvider({ children }: AppContextProviderProps) {
+  const [session,setSession]=useState('')
   async function auth(obj: UserInput): Promise<Auth | undefined> {
     try {
       const session = await axios({
@@ -45,6 +48,8 @@ export function AppContextProvider({ children }: AppContextProviderProps) {
   }
   const value = {
     auth,
+    session,
+    setSession,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

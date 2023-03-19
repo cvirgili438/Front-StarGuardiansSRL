@@ -21,11 +21,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start:develop": "REACT_APP_ENV=development react-scripts start",
-    "start:dev:win":"set REACT_APP_ENV=development&& react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start:local": "env-cmd -e LOCAL npm run start",
+    "start:prod": "env-cmd -e PRODUCTION npm run start"
   },
   "eslintConfig": {
     "extends": [
@@ -47,6 +47,9 @@
   },
   "devDependencies": {
     "@types/react-datepicker": "^4.10.0",
-    "@types/react-router-dom": "^5.3.3"
+    "@types/react-router-dom": "^5.3.3",
+    "env-cmd": "^10.1.0",
+    "install": "^0.13.0",
+    "npm": "^9.6.2"
   }
 }

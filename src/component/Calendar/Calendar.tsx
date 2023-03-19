@@ -26,7 +26,7 @@ export default function Calendar() {
   return (
     <div className={style.main_div}>
       calendar
-      <div></div>
+      
       <DatePicker selected={date.date} onChange={handleDate} />
       <CalendarCard  />
     </div>

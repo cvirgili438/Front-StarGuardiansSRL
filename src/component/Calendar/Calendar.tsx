@@ -7,10 +7,11 @@ import { Auth } from "../../App";
 import { AppContext } from "../../context/AppContext";
 import style from "./Calendar.module.css";
 import CalendarCard from "./CalendarCard";
+import { CalendarTD } from "../../constant/types";
 
 
 export default function Calendar() {
-  const api = useContext(AppContext);
+  const {getUserSchedule} = useContext(AppContext);
   const [user, setUser] = useLocalStorage<Auth>("User", Object);
   console.log(process.env.REACT_APP_URL);
   const [date, setDate] = useState({
@@ -20,6 +21,19 @@ export default function Calendar() {
     setDate({ date: e });    
   }
   useEffect(() => {
+     async function getSchedule( body:CalendarTD):Promise<void> {
+       const response =  await getUserSchedule(body)
+       console.log(await response)
+     }  
+     getSchedule({
+      id:user.user,
+      month:date.date.getMonth(),
+      token:user.token,
+      year:date.date.getFullYear()
+     })
+    
+ 
+     
 
   }, []);
   

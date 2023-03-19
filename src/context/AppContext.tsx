@@ -1,13 +1,15 @@
 import { createContext, ReactNode, useContext, useState } from "react";
-import axios, { AxiosError } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { UserInput } from "../component/LoginForm/LoginForm";
 import { Auth } from "../App";
+import { CalendarTD } from "../constant/types";
+import { Month } from "../constant/enum";
 
 type AppContexts = {
   auth: (obj: UserInput) => Promise<Auth | undefined>;
   session: string;
   setSession:React.Dispatch<React.SetStateAction<string>>;
-  getUserSchedule : (id:string)=>Promise<string>
+  getUserSchedule : (body:CalendarTD)=>Promise<Object[]>
 };
 type AppContextProviderProps = {
   children: ReactNode;
@@ -30,7 +32,7 @@ export function AppContextProvider({ children }: AppContextProviderProps) {
       });
 
       return {
-        user: session.data.user.username,
+        user: session.data.user.id,
         token: session.data.accessToken,
         authorized: true,
       };
@@ -48,8 +50,25 @@ export function AppContextProvider({ children }: AppContextProviderProps) {
     }
   }
 
-  async function getUserSchedule(id:string):Promise<string>{
-    return 'some'
+  async function getUserSchedule(body:CalendarTD):Promise<Object[]>{
+    try {
+      const response:AxiosResponse= await axios({
+        url:`${URL}/api/work-schedule/calendar/${body.id}`,
+        method:'GET',
+        params:{
+          month:Month[body.month],
+          year:body.year
+        },
+        headers:{access_token:body.token}
+      })
+      if((await response.data).length === 0 ){
+        throw new Error('Nothing have ')
+      }
+      return await response.data
+    } catch (error:any) {
+     throw new Error(error)
+    }
+   
   }
   const value = {
     auth,

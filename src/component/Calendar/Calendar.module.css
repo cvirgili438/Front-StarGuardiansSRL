@@ -1,0 +1,5 @@
+.main_div{
+    padding-top: 50px;
+    display: grid;
+    place-content: center;
+}

@@ -1,12 +1,5 @@
-import React from "react";
-import {  CalendarCardType } from "../../constant/types";
+import React from 'react';
 
-
-
-export default function CalendarCard(props:any){
-    return (
-        <div>
-        
-        </div>
-    )
+export default function CalendarCard(props: any) {
+  return <div></div>;
 }

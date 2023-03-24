@@ -1,6 +1,5 @@
-.container{
-    padding-top: 50px;
-    display: grid;
-    place-content: center;
-
+.container {
+  padding-top: 50px;
+  display: grid;
+  place-content: center;
 }

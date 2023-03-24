@@ -1,30 +1,30 @@
-import { createContext, ReactNode, useContext, useState } from "react";
-import axios, { AxiosError, AxiosResponse } from "axios";
-import { UserInput } from "../component/LoginForm/LoginForm";
-import { Auth } from "../App";
-import { CalendarTD } from "../constant/types";
-import { Month } from "../constant/enum";
+import { createContext, type ReactNode, useContext, useState } from 'react';
+import axios, { type AxiosError, type AxiosResponse } from 'axios';
+import { type UserInput } from '../component/LoginForm/LoginForm';
+import { type Auth } from '../App';
+import { returnSchedule, type CalendarTD } from '../constant/types';
+import { Month } from '../constant/enum';
 
-type AppContexts = {
+interface AppContexts {
   auth: (obj: UserInput) => Promise<Auth | undefined>;
   session: string;
-  setSession:React.Dispatch<React.SetStateAction<string>>;
-  getUserSchedule : (body:CalendarTD)=>Promise<Object[]>
-};
-type AppContextProviderProps = {
+  setSession: React.Dispatch<React.SetStateAction<string>>;
+  getUserSchedule: (body: CalendarTD) => Promise<returnSchedule[]>;
+}
+interface AppContextProviderProps {
   children: ReactNode;
-};
+}
 export const AppContext = createContext({} as AppContexts);
 
 const URL = process.env.REACT_APP_URL;
 
 export function AppContextProvider({ children }: AppContextProviderProps) {
-  const [session,setSession]=useState('')
+  const [session, setSession] = useState('');
   async function auth(obj: UserInput): Promise<Auth | undefined> {
     try {
       const session = await axios({
         url: `${URL}/api/auth/login`,
-        method: "POST",
+        method: 'POST',
         data: {
           username: obj.user,
           password: obj.password,
@@ -41,8 +41,8 @@ export function AppContextProvider({ children }: AppContextProviderProps) {
         const axiosError = error as AxiosError;
         if (axiosError.response?.status === 401) {
           return {
-            user: "",
-            token: "",
+            user: '',
+            token: '',
             authorized: false,
           };
         }
@@ -50,31 +50,30 @@ export function AppContextProvider({ children }: AppContextProviderProps) {
     }
   }
 
-  async function getUserSchedule(body:CalendarTD):Promise<Object[]>{
+  async function getUserSchedule(body: CalendarTD): Promise<returnSchedule[]> {
     try {
-      const response:AxiosResponse= await axios({
-        url:`${URL}/api/work-schedule/calendar/${body.id}`,
-        method:'GET',
-        params:{
-          month:Month[body.month],
-          year:body.year
+      const response: AxiosResponse = await axios({
+        url: `${URL}/api/work-schedule/calendar/${body.id}`,
+        method: 'GET',
+        params: {
+          month: Month[body.month],
+          year: body.year,
         },
-        headers:{access_token:body.token}
-      })
-      if((await response.data).length === 0 ){
-        throw new Error('Nothing have ')
+        headers: { access_token: body.token },
+      });
+      if ((await response.data).length === 0) {
+        throw new Error('Nothing have ');
       }
-      return await response.data
-    } catch (error:any) {
-     throw new Error(error)
+      return await response.data;
+    } catch (error: any) {
+      throw new Error(error);
     }
-   
   }
   const value = {
     auth,
     session,
     setSession,
-    getUserSchedule
+    getUserSchedule,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

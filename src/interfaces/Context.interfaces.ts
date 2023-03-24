@@ -1,4 +1,3 @@
-export interface UserSchedule{
-    token:string
-    
+export interface UserSchedule {
+  token: string
 }

@@ -1,11 +1,23 @@
+import { Month } from './enum';
 
-export type CalendarCardType = {
-    calendar:Date
+export interface CalendarCardType {
+  calendar: Date;
 }
 
-export type CalendarTD = {
-    month : number,
-    year:number,
-    id:string,
-    token:string
+export interface CalendarTD {
+  month: number;
+  year: number;
+  id: string;
+  token: string;
 }
+export type CalendarObject = {
+  startTime: Date;
+  endTime: Date;
+};
+export type returnSchedule = {
+  dayOfWeek: number;
+  endTime: string;
+  month: Month;
+  startTime: string;
+  year: number;
+};

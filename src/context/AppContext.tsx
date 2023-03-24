@@ -2,7 +2,7 @@ import { createContext, type ReactNode, useContext, useState } from 'react';
 import axios, { type AxiosError, type AxiosResponse } from 'axios';
 import { type UserInput } from '../component/LoginForm/LoginForm';
 import { type Auth } from '../App';
-import { returnSchedule, type CalendarTD } from '../constant/types';
+import { type returnSchedule, type CalendarTD } from '../constant/types';
 import { Month } from '../constant/enum';
 
 interface AppContexts {
@@ -14,7 +14,7 @@ interface AppContexts {
 interface AppContextProviderProps {
   children: ReactNode;
 }
-export const AppContext = createContext({} as AppContexts);
+export const AppContext = createContext<AppContexts>({} as AppContexts);
 
 const URL = process.env.REACT_APP_URL;
 

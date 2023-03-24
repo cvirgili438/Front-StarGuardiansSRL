@@ -25,56 +25,58 @@ type Action =
   | { type: 'December' };
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case Month[0]:
+    case 'January':
       return {
         month: Month.January,
       };
-    case Month[1]:
+    case 'February':
       return {
         month: Month.February,
       };
-    case Month[2]:
+    case 'March':
       return {
         month: Month.March,
       };
-    case Month[3]:
+    case 'April':
       return {
         month: Month.April,
       };
-    case Month[4]:
+    case 'May':
       return {
         month: Month.May,
       };
-    case Month[5]:
+    case 'June':
       return {
         month: Month.June,
       };
-    case Month[6]:
+    case 'July':
       return {
         month: Month.July,
       };
-    case Month[7]:
+    case 'August':
       return {
         month: Month.August,
       };
-    case Month[8]:
+    case 'September':
       return {
         month: Month.September,
       };
-    case Month[9]:
+    case 'October':
       return {
         month: Month.October,
       };
-    case Month[10]:
+    case 'November':
       return {
         month: Month.November,
       };
-    case Month[11]:
+    case 'December':
       return {
         month: Month.December,
       };
 
     default:
-      throw new Error();
+      return {
+        ...state,
+      };
   }
 };

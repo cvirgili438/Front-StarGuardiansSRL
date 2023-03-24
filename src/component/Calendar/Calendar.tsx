@@ -6,7 +6,7 @@ import { type Auth } from '../../App';
 import { AppContext } from '../../context/AppContext';
 import style from './Calendar.module.css';
 import CalendarCard from './CalendarCard';
-import { returnSchedule } from '../../constant/types';
+import { type returnSchedule } from '../../constant/types';
 
 export default function Calendar() {
   const { getUserSchedule } = useContext(AppContext);
@@ -45,7 +45,11 @@ export default function Calendar() {
     <div className={style.main_div}>
       calendar
       <DatePicker selected={date.date} onChange={handleDate} />
-      <CalendarCard calendar={calendar} />
+      <CalendarCard
+        calendar={calendar}
+        month={calendar.length > 0 && calendar[0].month}
+        year={calendar.length > 0 && calendar[0].year}
+      />
     </div>
   );
 }

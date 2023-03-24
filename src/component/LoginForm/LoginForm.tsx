@@ -1,38 +1,38 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
-import { type Auth } from '../../App'
-import { AppContext } from '../../context/AppContext'
-import { useLocalStorage } from '../../hooks/useApp'
-import style from './LoginForm.module.css'
+import React, { useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { type Auth } from '../../App';
+import { AppContext } from '../../context/AppContext';
+import { useLocalStorage } from '../../hooks/useApp';
+import style from './LoginForm.module.css';
 
 export interface UserInput {
-  user: string
-  password: string
+  user: string;
+  password: string;
 }
 
-export default function LoginForm () {
-  const { auth } = useContext(AppContext)
-  const history = useHistory()
-  const [input, setInput] = useState({} as UserInput)
-  const [user, setUser] = useLocalStorage<Auth | undefined>('User', Object)
-  function handleInput (e: React.ChangeEvent<HTMLInputElement>) {
-    e.preventDefault()
+export default function LoginForm() {
+  const { auth } = useContext(AppContext);
+  const history = useHistory();
+  const [input, setInput] = useState({} as UserInput);
+  const [user, setUser] = useLocalStorage<Auth | undefined>('User', Object);
+  function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
+    e.preventDefault();
     setInput({
       ...input,
-      [e.target.name]: e.target.value
-    })
+      [e.target.name]: e.target.value,
+    });
   }
-  async function handleSubmit (e: any) {
-    e.preventDefault()
+  async function handleSubmit(e: any) {
+    e.preventDefault();
 
-    const response = await auth(input)
-    setUser(response)
+    const response = await auth(input);
+    setUser(response);
   }
   useEffect(() => {
     if (user?.authorized === true) {
-      history.push('/')
+      history.push('/');
     }
-  }, [user, history])
+  }, [user, history]);
 
   return (
     <div className={style.container}>
@@ -49,8 +49,14 @@ export default function LoginForm () {
           <button onClick={handleSubmit}> Login</button>
         </form>
         <h3>No tiene cuenta creada ?</h3>
-        <button onClick={() => { history.push('/register') }}>Register </button>
+        <button
+          onClick={() => {
+            history.push('/register');
+          }}
+        >
+          Register{' '}
+        </button>
       </div>
     </div>
-  )
+  );
 }

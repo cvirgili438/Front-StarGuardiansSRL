@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer } from 'react';
-import { Month } from '../../constant/enum';
+
 import { initialState, obtainDays, reducer } from '../../utils/calendar.utils';
 
 export default function CalendarCard(props: any) {
@@ -10,6 +10,7 @@ export default function CalendarCard(props: any) {
     dispatch({ type: month });
   }, [month]);
   console.log(obtainDays(year, state.month));
+  console.log('Calendar', calendar);
 
   return <div></div>;
 }

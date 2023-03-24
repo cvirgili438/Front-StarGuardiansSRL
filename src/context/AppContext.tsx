@@ -1,9 +1,10 @@
-import { createContext, type ReactNode, useContext, useState } from 'react';
+import { createContext, type ReactNode, useState } from 'react';
 import axios, { type AxiosError, type AxiosResponse } from 'axios';
 import { type UserInput } from '../component/LoginForm/LoginForm';
 import { type Auth } from '../App';
 import { type returnSchedule, type CalendarTD } from '../constant/types';
 import { Month } from '../constant/enum';
+import { CalendarContextProvider } from './CalendarContext';
 
 interface AppContexts {
   auth: (obj: UserInput) => Promise<Auth | undefined>;
@@ -76,9 +77,9 @@ export function AppContextProvider({ children }: AppContextProviderProps) {
     getUserSchedule,
   };
 
-  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
-}
-
-export function useAppContext() {
-  return useContext(AppContext);
+  return (
+    <AppContext.Provider value={value}>
+      <CalendarContextProvider>{children}</CalendarContextProvider>
+    </AppContext.Provider>
+  );
 }

@@ -6,8 +6,23 @@ import { CalendarTD, returnSchedule } from '../constant/types';
 export interface UserSchedule {
   token: string;
 }
-
-export interface CalendarContextI {}
+export interface getFilteredScheduleI {
+  calendar: [];
+  year: number;
+  month: number;
+  initialDay: number;
+}
+export interface getFilteredScheduleReturn {
+  date: Date;
+  place: any;
+  startWorking: string;
+  endWorking: string;
+}
+export interface CalendarContextI {
+  getFilteredSchedule: (
+    body: getFilteredScheduleI
+  ) => getFilteredScheduleReturn[];
+}
 
 export interface CalendarContextProviderProps {
   children: ReactNode;

@@ -1,16 +1,33 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
+import { CalendarContext } from '../../context/CalendarContext';
+import { getFilteredScheduleReturn } from '../../interfaces/Context.interfaces';
 
-import { initialState, obtainDays, reducer } from '../../utils/calendar.utils';
+import {
+  initialState,
+  obtainDays,
+  reducer,
+  setArraySchedule,
+} from '../../utils/calendar.utils';
 
 export default function CalendarCard(props: any) {
-  const { calendar, year, month } = props;
+  const { getFilteredSchedule } = useContext(CalendarContext);
+  const { calendar, year, month, initialDay } = props;
+  const [schedule, setSchedule] = useState<getFilteredScheduleReturn[]>();
   const [state, dispatch] = useReducer(reducer, initialState);
-  console.log(month, year);
+
   useEffect(() => {
     dispatch({ type: month });
-  }, [month]);
-  console.log('days', obtainDays(year, state.month));
-  console.log('Calendar', calendar);
+    if (calendar.length > 0) {
+      const arraySchedule = setArraySchedule(
+        year,
+        state.month,
+        calendar,
+        initialDay,
+        getFilteredSchedule
+      );
+      setSchedule(arraySchedule);
+    }
+  }, [month, initialDay]);
 
   return (
     <div>

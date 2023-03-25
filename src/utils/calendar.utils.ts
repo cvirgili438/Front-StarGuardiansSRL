@@ -1,4 +1,8 @@
 import { Month } from '../constant/enum';
+import {
+  getFilteredScheduleI,
+  getFilteredScheduleReturn,
+} from '../interfaces/Context.interfaces';
 
 export function obtainDays(year: number, month: number) {
   const date = new Date(year, month + 1, 0);
@@ -80,3 +84,14 @@ export const reducer = (state: State, action: Action): State => {
       };
   }
 };
+
+export function setArraySchedule(
+  year: number,
+  month: number,
+  calendar: [],
+  initialDay: number,
+  func: (body: getFilteredScheduleI) => getFilteredScheduleReturn[]
+) {
+  const final = func({ year, month, calendar, initialDay });
+  return final;
+}

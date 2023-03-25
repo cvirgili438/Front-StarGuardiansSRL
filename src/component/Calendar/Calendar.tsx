@@ -49,6 +49,7 @@ export default function Calendar() {
         calendar={calendar}
         month={calendar.length > 0 && calendar[0].month}
         year={calendar.length > 0 && calendar[0].year}
+        initialDay={date.date.getDate()}
       />
     </div>
   );

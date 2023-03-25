@@ -1,10 +1,17 @@
-import React, { useContext, useEffect, useReducer, useState } from 'react';
+import React, {
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+  CSSProperties,
+} from 'react';
 import { CalendarContext } from '../../context/CalendarContext';
 import { getFilteredScheduleReturn } from '../../interfaces/Context.interfaces';
+import style from './Calendar.module.css';
 
 import {
+  days,
   initialState,
-  obtainDays,
   reducer,
   setArraySchedule,
 } from '../../utils/calendar.utils';
@@ -14,7 +21,6 @@ export default function CalendarCard(props: any) {
   const { calendar, year, month, initialDay } = props;
   const [schedule, setSchedule] = useState<getFilteredScheduleReturn[]>();
   const [state, dispatch] = useReducer(reducer, initialState);
-  console.log(obtainDays(year, state.month));
 
   useEffect(() => {
     dispatch({ type: month });
@@ -35,27 +41,67 @@ export default function CalendarCard(props: any) {
       console.log(error);
     }
   }, [state, initialDay, getFilteredSchedule, calendar, year]);
-  console.log(schedule);
+
   return (
     <div>
-      <table>
-        <thead>
-          <tr>
-            <th>Schedules since {initialDay}</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td>Dato 1,1</td>
-            <td>Dato 1,2</td>
-          </tr>
-          <tr>
-            <td>Dato 2,1</td>
-            <td>Dato 2,2</td>
-          </tr>
-        </tbody>
-      </table>
+      <h1>Schedule since {initialDay}</h1>
+      <ol className={style.ol}>
+        {days.map((e) => {
+          return (
+            <li key={e} className={style.day_name}>
+              {e}
+            </li>
+          );
+        })}
+        {state &&
+          state.month !== Infinity &&
+          year !== false &&
+          renderLi(year, state.month, schedule as getFilteredScheduleReturn[])}
+      </ol>
     </div>
   );
+}
+function renderLi(
+  year: number,
+  month: number,
+  schedule: getFilteredScheduleReturn[]
+) {
+  if (schedule !== undefined) {
+    let work: number[] = schedule.map((e) => {
+      return e.date.getDate();
+    });
+
+    let date = new Date(year, month + 1, 0);
+    let date2 = new Date(year, month + 1, 1);
+    let array = new Array(date.getDate()).fill(1);
+
+    let first: any = date2.getDay();
+
+    const liStyle = {
+      '--first-day-start': first + 1,
+    } as React.CSSProperties;
+    return array.map((e, i) => {
+      let verify = work.includes(i + 1);
+      if (!verify) {
+        return (
+          <li
+            key={i}
+            className={i === 0 ? `${style.first_day}` : ''}
+            style={liStyle as CSSProperties}
+          >
+            {i + 1}
+          </li>
+        );
+      } else {
+        return (
+          <li
+            className={i === 0 ? `${style.first_day}` : style.work}
+            style={liStyle as CSSProperties}
+          >
+            {i + 1}
+          </li>
+        );
+      }
+    });
+  }
 }

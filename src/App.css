@@ -36,3 +36,6 @@
     transform: rotate(360deg);
   }
 }
+:root {
+  --first-day-start:0
+}

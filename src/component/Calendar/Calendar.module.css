@@ -3,3 +3,25 @@
   display: grid;
   place-content: center;
 }
+
+.day_name{
+  background: #eee;
+  font-weight: bold;
+  font-size: 12px;
+  margin-bottom: 2px;
+  padding: 4px;
+  text-align: center;
+}
+.ol{
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin: 0;
+  padding: 0;
+}
+.first_day{
+  grid-column-start: var(--first-day-start, 0);
+}
+.work{
+  background-color: rgba(227, 5, 5, 0.425);
+}

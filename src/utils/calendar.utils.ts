@@ -1,4 +1,4 @@
-import { Month } from '../constant/enum';
+import { Month, WeekDays } from '../constant/enum';
 import {
   getFilteredScheduleI,
   getFilteredScheduleReturn,
@@ -14,7 +14,7 @@ export interface State {
 export const initialState: State = {
   month: Infinity,
 };
-type Action =
+export type Action =
   | { type: 'January' }
   | { type: 'February' }
   | { type: 'March' }
@@ -95,3 +95,8 @@ export function setArraySchedule(
   const final = func({ year, month, calendar, initialDay });
   return final;
 }
+
+export let arrayDays = new Array(7).fill(1);
+export const days = arrayDays.map((e, i) => {
+  return WeekDays[i];
+});

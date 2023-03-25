@@ -42,7 +42,7 @@ export default function Calendar() {
 
   return (
     <div className={style.main_div}>
-      calendar
+      Select the day which you wanna know the schedule
       <DatePicker selected={date.date} onChange={handleDate} />
       <CalendarCard
         calendar={calendar}

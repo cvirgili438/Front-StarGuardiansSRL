@@ -12,12 +12,12 @@ export interface getFilteredScheduleI {
   month: number;
   initialDay: string;
 }
-export interface getFilteredScheduleReturn {
+export type getFilteredScheduleReturn = {
   date: Date;
   place: any;
   startWorking: string;
   endWorking: string;
-}
+};
 export interface CalendarContextI {
   getFilteredSchedule: (
     body: getFilteredScheduleI

@@ -1,12 +1,8 @@
-import React, { createContext, ReactNode } from 'react';
-
-interface CalendarContextI {
-  some: () => void;
-}
-
-interface CalendarContextProviderProps {
-  children: ReactNode;
-}
+import React, { createContext } from 'react';
+import {
+  CalendarContextI,
+  CalendarContextProviderProps,
+} from '../interfaces/Context.interfaces';
 
 export const CalendarContext = createContext<CalendarContextI>(
   {} as CalendarContextI
@@ -15,12 +11,7 @@ export const CalendarContext = createContext<CalendarContextI>(
 export function CalendarContextProvider({
   children,
 }: CalendarContextProviderProps) {
-  const some = () => {
-    console.log('algo');
-  };
-  const value = {
-    some,
-  };
+  const value = {};
 
   return (
     <CalendarContext.Provider value={value}>

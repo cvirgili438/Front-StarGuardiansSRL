@@ -1,20 +1,15 @@
-import { createContext, type ReactNode, useState } from 'react';
+import { createContext, useState } from 'react';
 import axios, { type AxiosError, type AxiosResponse } from 'axios';
 import { type UserInput } from '../component/LoginForm/LoginForm';
 import { type Auth } from '../App';
 import { type returnSchedule, type CalendarTD } from '../constant/types';
 import { Month } from '../constant/enum';
 import { CalendarContextProvider } from './CalendarContext';
+import {
+  AppContextProviderProps,
+  AppContexts,
+} from '../interfaces/Context.interfaces';
 
-interface AppContexts {
-  auth: (obj: UserInput) => Promise<Auth | undefined>;
-  session: string;
-  setSession: React.Dispatch<React.SetStateAction<string>>;
-  getUserSchedule: (body: CalendarTD) => Promise<returnSchedule[]>;
-}
-interface AppContextProviderProps {
-  children: ReactNode;
-}
 export const AppContext = createContext<AppContexts>({} as AppContexts);
 
 const URL = process.env.REACT_APP_URL;

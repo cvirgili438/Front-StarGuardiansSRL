@@ -9,8 +9,12 @@ export default function CalendarCard(props: any) {
   useEffect(() => {
     dispatch({ type: month });
   }, [month]);
-  console.log(obtainDays(year, state.month));
+  console.log('days', obtainDays(year, state.month));
   console.log('Calendar', calendar);
 
-  return <div></div>;
+  return (
+    <div>
+      <table></table>
+    </div>
+  );
 }

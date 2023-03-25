@@ -12,7 +12,7 @@ export interface State {
   month: number;
 }
 export const initialState: State = {
-  month: 30,
+  month: Infinity,
 };
 type Action =
   | { type: 'January' }
@@ -89,7 +89,7 @@ export function setArraySchedule(
   year: number,
   month: number,
   calendar: [],
-  initialDay: number,
+  initialDay: string,
   func: (body: getFilteredScheduleI) => getFilteredScheduleReturn[]
 ) {
   const final = func({ year, month, calendar, initialDay });

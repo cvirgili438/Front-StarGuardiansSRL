@@ -4,7 +4,6 @@ import { getFilteredScheduleReturn } from '../../interfaces/Context.interfaces';
 
 import {
   initialState,
-  obtainDays,
   reducer,
   setArraySchedule,
 } from '../../utils/calendar.utils';
@@ -17,18 +16,24 @@ export default function CalendarCard(props: any) {
 
   useEffect(() => {
     dispatch({ type: month });
-    if (calendar.length > 0) {
-      const arraySchedule = setArraySchedule(
-        year,
-        state.month,
-        calendar,
-        initialDay,
-        getFilteredSchedule
-      );
-      setSchedule(arraySchedule);
+  }, [month]);
+  useEffect(() => {
+    try {
+      if (calendar.length > 0) {
+        const arraySchedule = setArraySchedule(
+          year,
+          state.month,
+          calendar,
+          initialDay,
+          getFilteredSchedule
+        );
+        setSchedule(arraySchedule);
+      }
+    } catch (error) {
+      console.log(error);
     }
-  }, [month, initialDay]);
-
+  }, [state, initialDay, getFilteredSchedule, calendar, year]);
+  console.log(schedule);
   return (
     <div>
       <table></table>

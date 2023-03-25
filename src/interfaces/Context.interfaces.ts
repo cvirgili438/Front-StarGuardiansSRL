@@ -10,7 +10,7 @@ export interface getFilteredScheduleI {
   calendar: [];
   year: number;
   month: number;
-  initialDay: number;
+  initialDay: string;
 }
 export interface getFilteredScheduleReturn {
   date: Date;

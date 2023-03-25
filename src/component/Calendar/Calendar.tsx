@@ -11,7 +11,7 @@ import { type returnSchedule } from '../../constant/types';
 export default function Calendar() {
   const { getUserSchedule } = useContext(AppContext);
   const [user] = useLocalStorage<Auth>('User', Object);
-  console.log(process.env.REACT_APP_URL);
+
   const [date, setDate] = useState({
     date: new Date(),
   });
@@ -22,7 +22,6 @@ export default function Calendar() {
   // async function getSchedule(body: CalendarTD): Promise<void> {
   //   const response = await getUserSchedule(body);
 
-  //   console.log(response);
   // }
   useEffect(() => {
     // getSchedule({
@@ -49,7 +48,10 @@ export default function Calendar() {
         calendar={calendar}
         month={calendar.length > 0 && calendar[0].month}
         year={calendar.length > 0 && calendar[0].year}
-        initialDay={date.date.getDate()}
+        initialDay={date.date
+          .getDate()
+          .toString()
+          .concat(`/${calendar.length > 0 && calendar[0].month}`)}
       />
     </div>
   );

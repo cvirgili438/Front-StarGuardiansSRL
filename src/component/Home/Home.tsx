@@ -1,25 +1,32 @@
-import React, { useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
-import { type Auth } from '../../App'
-import { useLocalStorage } from '../../hooks/useApp'
+import React, { useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { type Auth } from '../../App';
+import { useLocalStorage } from '../../hooks/useApp';
 
-export default function Home () {
-  const [user, setUser] = useLocalStorage<Auth>('User', Object)
-  const history = useHistory()
+export default function Home() {
+  const [user, setUser] = useLocalStorage<Auth>('User', Object);
+  const history = useHistory();
   useEffect(() => {
-    if (!(user?.authorized) || Object.keys(user).length < 1) {
-      history.push('/login')
+    if (!user?.authorized || Object.keys(user).length < 1) {
+      history.push('/login');
     }
-  }, [user, history])
+  }, [user, history]);
 
   return (
     <div>
       Home
       <div>
-        <button onClick={() => { setUser({ ...user, authorized: false }) }}>
+        <button
+          onClick={() => {
+            setUser({ ...user, authorized: false });
+          }}
+        >
           algo
         </button>
       </div>
+      <Link to={'/calendar'}>
+        <button>Calendar</button>
+      </Link>
     </div>
-  )
+  );
 }
